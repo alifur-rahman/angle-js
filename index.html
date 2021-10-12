@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>angle finel</title>
+    <style>
+      :root {
+        --al-primari-line-color: rgb(0, 0, 0);
+      }
+      :root {
+        --al-secondary-line-color: rgb(255, 255, 255);
+      }
+      :root {
+        --al-primary-text-color: rgb(0, 0, 0);
+      }
+      :root {
+        --al-secondary-text-color: rgb(255, 255, 255);
+      }
+
+      :root {
+        --al-triangle-box-color: rgba(0, 0, 0, 0.233);
+      }
+      :root {
+        --al-content-bg-color: transparent;
+      }
+      body {
+        overflow-x: hidden;
+        margin: 0 auto;
+        padding: 0;
+        background-image: url("https://i.pinimg.com/originals/6a/03/bc/6a03bc34589ca324cef872c95f2c7eb9.jpg");
+      }
+      .content-section {
+        padding-left: 260px;
+        position: relative;
+        padding-right: 160px;
+        padding-top: 125px;
+      }
+      .graph-process {
+        width: 1000px;
+        min-height: 280px;
+        margin-bottom: 80px;
+        position: relative;
+        border-bottom: 1px solid var(--al-primari-line-color);
+      }
+
+      /* item css  */
+      .graph-process .items {
+        height: 100%;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        position: absolute;
+      }
+
+      .graph-process .item {
+        bottom: 0;
+        left: 0;
+        position: absolute;
+        color: var(--al-primary-text-color);
+        white-space: nowrap;
+        transition: 0.5s;
+        font-family: "Montserrat", Sans-serif;
+        font-size: 16px;
+      }
+      .graph-process p {
+        margin: 0;
+        bottom: -43px;
+        left: 0;
+        position: absolute;
+        cursor: pointer;
+      }
+      .graph-process .item.-hover,
+      .graph-process .item.-hover-prev {
+        color: var(--al-primari-line-color);
+      }
+      .graph-process .triangle-wrap::before {
+        content: "";
+        opacity: 0;
+        width: 100%;
+        height: 1px;
+        top: 100%;
+        left: 0;
+        position: absolute;
+        background: var(--al-primari-line-color);
+        transition: 0.5s;
+      }
+      .graph-process .item.-hover .triangle {
+        background: var(--al-primari-line-color);
+      }
+      .graph-process .triangle {
+        width: 100%;
+        height: 100%;
+        top: 53%;
+        position: relative;
+        border: 1px solid var(--al-primari-line-color);
+        -webkit-transform: rotate(45deg) skew(15deg, 15deg);
+        transform: rotate(45deg) skew(15deg, 15deg);
+        pointer-events: all;
+        transition: 0.5s;
+      }
+      .graph-process .line-bottom {
+        width: 0%;
+        height: 1px;
+        top: 100%;
+        left: 0;
+        position: absolute;
+        background: var(--al-primari-line-color);
+        transition: 0.5s;
+      }
+      .graph-process .line-side-1 {
+        width: 0%;
+        height: 1px;
+        top: 100%;
+        left: 0;
+        position: absolute;
+        background: var(--al-primari-line-color);
+        -webkit-transform: rotate(-60deg) scale(0.5);
+        transform: rotate(-60deg) scale(0.5);
+        -webkit-transform-origin: 0 100%;
+        transform-origin: 0 100%;
+        transition: 0.5s;
+      }
+      .graph-process .line-side-2 {
+        width: 0%;
+        height: 1px;
+        top: 13.5%;
+        left: 50%;
+        position: absolute;
+        background: var(--al-primari-line-color);
+        -webkit-transform: rotate(60deg) scale(0.5);
+        transform: rotate(60deg) scale(0.5);
+        -webkit-transform-origin: 0 100%;
+        transform-origin: 0 100%;
+        transition: 0.5s;
+      }
+      .graph-process .line {
+        width: 605px;
+        height: 1px;
+        bottom: -1px;
+        left: 1px;
+        position: absolute;
+        -webkit-transform: rotate(-120deg);
+        transform: rotate(-120deg);
+        -webkit-transform-origin: 0 100%;
+        transform-origin: 0 100%;
+        background: var(--al-secondary-line-color);
+        transition: 0.5s;
+      }
+      .graph-process .line-helper,
+      .graph-process .line-helper-2 {
+        width: 0;
+        height: 1px;
+        bottom: -1px;
+        left: 0;
+        position: absolute;
+        background: var(--al-secondary-line-color);
+        transition: 0.5s;
+      }
+      .graph-process .line-helper,
+      .graph-process .line-helper-2 {
+        width: 0;
+        height: 1px;
+        bottom: -1px;
+        left: 0;
+        position: absolute;
+        background: var(--al-secondary-line-color);
+        transition: 0.5s;
+      }
+      .graph-process .triangle-wrap {
+        overflow: hidden;
+      }
+
+      /* item position  */
+      /* item 1 Default */
+      .graph-process .item-1 {
+        left: 1px;
+        color: var(--al-secondary-line-color);
+      }
+      .graph-process .item-1 .triangle-wrap {
+        width: 50px;
+        height: 50px;
+      }
+      .graph-process .item-1 .line-side-2,
+      .graph-process .item-1 .line-side-1,
+      .graph-process .item-1 .line-bottom {
+        background: var(--al-secondary-line-color);
+        transition: 0.5s;
+      }
+      /* item 2   with sub item 3 */
+      .graph-process .item-2 {
+        left: 90px;
+      }
+      .graph-process .item-2 .triangle-wrap {
+        width: 130px;
+        height: 130px;
+      }
+      .graph-process .item-3 {
+        left: 150px;
+      }
+      .graph-process .item-3 .triangle-wrap {
+        width: 100px;
+        height: 100px;
+      }
+      /* item 4  */
+      .graph-process .item-4 {
+        left: 280px;
+      }
+      .graph-process .item-4 .triangle-wrap {
+        width: 180px;
+        height: 180px;
+      }
+      /* item 5  */
+      .graph-process .item-5 {
+        left: 340px;
+      }
+      .graph-process .item-5 .triangle-wrap {
+        width: 210px;
+        height: 210px;
+      }
+      /* item 6  */
+      .graph-process .item-6 {
+        left: 450px;
+      }
+      .graph-process .item-6 .triangle-wrap {
+        width: 280px;
+        height: 280px;
+      }
+      /* item 7  */
+      .graph-process .item-7 {
+        left: 670px;
+      }
+      .graph-process .item-7 .triangle-wrap {
+        width: 100px;
+        height: 100px;
+      }
+      /* item 8  */
+      .graph-process .item-8 {
+        left: 772px;
+      }
+      .graph-process .item-8 .triangle-wrap {
+        width: 50px;
+        height: 50px;
+      }
+      /* item 9  */
+      .graph-process .item-9 {
+        left: 850px;
+      }
+      .graph-process .item-9 .triangle-wrap {
+        width: 150px;
+        height: 150px;
+      }
+      /* content css  */
+      #al-items-content {
+        position: relative;
+      }
+      .al-item-content {
+        visibility: hidden;
+        opacity: 0;
+        position: absolute;
+        top: 100px;
+        width: 100%;
+        left: 0;
+        background: var(--al-content-bg-color);
+        text-align: left;
+        padding: 10px 20px;
+        color: var(--al-secondary-text-color);
+      }
+      .al-content-title-786 {
+        font-family: "Raleway", Sans-serif;
+        font-size: 27px;
+        line-height: 48px;
+        width: 100%;
+        max-width: 80%;
+      }
+      .al-content-title-786 strong {
+        color: var(--al-primary-text-color);
+      }
+      .al-content-active {
+        visibility: visible;
+        top: 0;
+        opacity: 1;
+        transition: 1s;
+      }
+
+      /* after js add class  */
+      .mystyle {
+        color: var(--al-secondary-text-color);
+        transition: 0.5s;
+      }
+      .mystyle p {
+        color: var(--al-secondary-line-color);
+      }
+
+      .mystyle .line-bottom {
+        width: 100%;
+        background: var(--al-secondary-line-color);
+        transition: 0.5s;
+      }
+      .mystyle .line-side-1 {
+        background: var(--al-secondary-line-color);
+        width: 200%;
+        transition: 0.5s;
+      }
+      .mystyle .line-side-2 {
+        background: var(--al-secondary-line-color);
+        width: 200%;
+        transition: 0.5s;
+      }
+      .mystyle .triangle {
+        background: var(--al-triangle-box-color);
+        transition: 0.5s;
+      }
+    </style>
+  </head>
+  <body>
+    <section class="content-section section-process" id="how-we-work">
+      <div>
+        <div class="graph-process -init -line-init">
+          <div id="items" class="items">
+            <!-- item 1  -->
+            <div
+              class="item item-1 mystyle active"
+              data-content-id="1"
+              style="left: 1px"
+            >
+              <p>Hello</p>
+              <div class="triangle-wrap">
+                <div class="triangle"></div>
+                <div class="line-bottom"></div>
+                <div class="line-side-1"></div>
+                <div class="line-side-2"></div>
+              </div>
+            </div>
+            <!-- item 2    -->
+            <div class="item item-2" data-content-id="2" style="left: 65px">
+              <p>Research</p>
+              <div class="triangle-wrap">
+                <div class="triangle"></div>
+                <div class="line-bottom"></div>
+                <div class="line-side-1"></div>
+                <div class="line-side-2"></div>
+              </div>
+            </div>
+            <!-- item 3 it's a sub item in 3 -->
+            <div class="item item-3" data-content-id="3" style="left: 161px">
+              <p>Scoping</p>
+              <div class="triangle-wrap">
+                <div class="triangle"></div>
+                <div class="line-bottom"></div>
+                <div class="line-side-1"></div>
+                <div class="line-side-2"></div>
+              </div>
+            </div>
+            <!-- item 4  -->
+            <div class="item item-4" data-content-id="4" style="left: 280px">
+              <p>Design</p>
+              <div class="triangle-wrap">
+                <div class="triangle"></div>
+                <div class="line-bottom"></div>
+                <div class="line-side-1"></div>
+                <div class="line-side-2"></div>
+              </div>
+            </div>
+            <!-- item 5  -->
+            <div class="item item-5" data-content-id="5" style="left: 340px">
+              <p>Front-end</p>
+              <div class="triangle-wrap">
+                <div class="triangle"></div>
+                <div class="line-bottom"></div>
+                <div class="line-side-1"></div>
+                <div class="line-side-2"></div>
+              </div>
+            </div>
+            <!-- item 6  -->
+            <div class="item item-6" data-content-id="6" style="left: 450px">
+              <p>Backend & CMS</p>
+              <div class="triangle-wrap">
+                <div class="triangle"></div>
+                <div class="line-bottom"></div>
+                <div class="line-side-1"></div>
+                <div class="line-side-2"></div>
+              </div>
+            </div>
+            <!-- item 7  -->
+            <div class="item item-7" data-content-id="7" style="left: 670px">
+              <p>Testing</p>
+              <div class="triangle-wrap">
+                <div class="triangle"></div>
+                <div class="line-bottom"></div>
+                <div class="line-side-1"></div>
+                <div class="line-side-2"></div>
+              </div>
+            </div>
+            <!-- item 8  -->
+            <div class="item item-8" data-content-id="8" style="left: 772px">
+              <p>Launch</p>
+              <div class="triangle-wrap">
+                <div class="triangle"></div>
+                <div class="line-bottom"></div>
+                <div class="line-side-1"></div>
+                <div class="line-side-2"></div>
+              </div>
+            </div>
+            <!-- item 9  -->
+            <div class="item item-9" data-content-id="9" style="left: 850px">
+              <p>Maintenance</p>
+              <div class="triangle-wrap">
+                <div class="triangle"></div>
+                <div class="line-bottom"></div>
+                <div class="line-side-1"></div>
+                <div class="line-side-2"></div>
+              </div>
+            </div>
+          </div>
+          <div class="line"><span style="width: 100%"></span></div>
+          <div id="line-helper" class="line-helper" style="width: 90px"></div>
+          <div class="line-helper-2"></div>
+        </div>
+      </div>
+      <!-- hidden content area  -->
+      <div id="al-items-content" class="al-items-content">
+        <!-- content item 1  -->
+        <div class="al-item-content al-content-active">
+          <p class="al-content-title-786">
+            Say Hi, Hola, Bonjour, Hej, Ciao...<br />
+            <strong>Contuct Us</strong> and let's start a conversation.
+          </p>
+        </div>
+        <!-- content item 2  -->
+        <div class="al-item-content">
+          <p class="al-content-title-786">
+            The first stage where we begin to gather information, building a
+            creative brief that will act as the
+            <strong>blueprint of the project. </strong>
+          </p>
+        </div>
+        <!-- content item 3  -->
+        <div class="al-item-content">
+          <p class="al-content-title-786">
+            The first stage where we begin to gather information, building a
+            creative brief that will act as the
+            <strong>blueprint of the project. </strong>
+          </p>
+        </div>
+        <!-- content item 4  -->
+        <div class="al-item-content">
+          <p class="al-content-title-786">
+            After understanding all aspects of the product, we start designing
+            the <strong>user experience and user interface. </strong> Sketching,
+            wire-framing, designing and animating to create smart and elegant
+            designs.
+          </p>
+        </div>
+        <!-- content item 5  -->
+        <div class="al-item-content">
+          <p class="al-content-title-786">
+            Every digital product needs a
+            <strong>solid cross-platform interface.</strong> In this stage we
+            focus on converting designs into tangible pieces.
+          </p>
+        </div>
+        <!-- content item 6  -->
+        <div class="al-item-content">
+          <p class="al-content-title-786">
+            Developing a <strong>scalable & reliable backend</strong>,
+            customized for each client's needs, is our day to day business.
+          </p>
+        </div>
+        <!-- content item 7  -->
+        <div class="al-item-content">
+          <p class="al-content-title-786">
+            Extensive QA sessions help us identify the ways to
+            <strong>improve the product.</strong>
+          </p>
+        </div>
+        <!-- content item 8  -->
+        <div class="al-item-content">
+          <p class="al-content-title-786">
+            We'll orchestrate the <strong>smooth launch</strong> 🚀of your
+            product.
+          </p>
+        </div>
+        <!-- content item 9  -->
+        <div class="al-item-content">
+          <p class="al-content-title-786">
+            Every project always evolves over time. We provide
+            <strong>daily maintenance and regular updates.</strong>
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <script>
+      var mainwapper = document.getElementById("items");
+      var item = mainwapper.getElementsByClassName("item");
+
+      // hidden content
+      var contentwapper = document.getElementById("al-items-content");
+      var singleHiddenContent =
+        contentwapper.getElementsByClassName("al-item-content");
+
+      for (var i = 0; i < item.length; i++) {
+        item[i].addEventListener("mouseover", function () {
+          var current = document.getElementsByClassName("mystyle");
+          current[0].className = current[0].className.replace(" mystyle", "");
+          this.className += " mystyle";
+
+          // content hide show
+          var contentDataid = this.getAttribute("data-content-id");
+          var hiddenContenIndex = contentDataid - 1;
+
+          for (let ind = 0; ind < singleHiddenContent.length; ind++) {
+            singleHiddenContent[ind].classList.remove("al-content-active");
+            if (hiddenContenIndex == ind) {
+              singleHiddenContent[ind].classList.add("al-content-active");
+            }
+          }
+
+          singleHiddenContent[hiddenContenIndex].classList.add(
+            "al-content-active"
+          );
+          // liner position
+          var liner_position = this.getAttribute("style");
+          var res = liner_position.replace(/\D/g, "");
+          document.getElementById("line-helper").style.width = res + "px";
+        });
+      }
+    </script>
+  </body>
+</html>
